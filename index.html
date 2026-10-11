@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101016">
+  <title>Xkere — Comunidades en tiempo real</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail">
+      <div class="brand-mark">X</div>
+      <button class="rail-btn active" aria-label="Inicio">⌂</button>
+      <button class="rail-btn" aria-label="Mensajes">▤</button>
+      <button class="rail-btn" aria-label="Añadir comunidad">＋</button>
+      <div class="rail-bottom"><div class="avatar you">W</div></div>
+    </aside>
+    <aside class="sidebar">
+      <div class="brand-row">
+        <div><div class="wordmark">XKERE<span>.</span></div><div class="tagline" data-i18n="tagline">Juega. Habla. Conecta.</div></div>
+        <button id="lang-toggle" class="lang-toggle" title="Change language">EN</button>
+      </div>
+      <div class="section-label" data-i18n="communities">TUS COMUNIDADES</div>
+      <button class="community selected"><span class="community-icon purple">N</span><span>Night Owls</span><span class="online-dot"></span></button>
+      <button class="community"><span class="community-icon orange">R</span><span>Racing Hub</span></button>
+      <button class="community"><span class="community-icon blue">G</span><span>Guild Zero</span></button>
+      <button class="new-community"><span>＋</span><span data-i18n="addCommunity">Añadir comunidad</span></button>
+      <div class="section-label channels-label" data-i18n="channels">CANALES</div>
+      <div class="channel-heading">◖ <span data-i18n="voice">Voz</span></div>
+      <button class="channel active-channel"><span class="sound-icon">♫</span><span data-i18n="lobby">Sala principal</span><span class="member-count">3</span></button>
+      <button class="channel"><span class="sound-icon">♫</span><span data-i18n="ranked">Ranked squad</span></button>
+      <div class="channel-heading text-channel"># <span data-i18n="text">Texto</span></div>
+      <button class="channel"><span>#</span><span data-i18n="general">general</span></button>
+      <button class="channel"><span>#</span><span data-i18n="clips">clips-y-momentos</span></button>
+      <div class="voice-status"><span class="status-light"></span><div><strong data-i18n="voiceConnected">Vista previa de voz</strong><small data-i18n="voiceDemo">Audio aún no conectado</small></div><button aria-label="Voice settings">⚙</button></div>
+      <div class="profile"><div class="avatar you">W</div><div class="profile-name"><strong>Waricho</strong><small data-i18n="online">En línea</small></div><button aria-label="Settings">⚙</button></div>
+    </aside>
+    <main class="main-panel">
+      <header class="topbar">
+        <div class="breadcrumbs"><span class="community-icon small purple">N</span><strong>Night Owls</strong><span class="slash">/</span><span data-i18n="general">general</span></div>
+        <div class="top-actions"><button title="Search">⌕</button><button title="Members">♙</button><button title="Help">?</button></div>
+      </header>
+      <section class="welcome">
+        <div class="eyebrow"><span class="pulse"></span><span data-i18n="earlyPreview">VISTA PREVIA · CONCEPTO INICIAL</span></div>
+        <h1 data-i18n="welcomeTitle">Tu gente.<br><em>Tu partida.</em></h1>
+        <p data-i18n="welcomeText">Un espacio para reunirte, coordinar y compartir cada momento. Xkere está empezando.</p>
+        <div class="welcome-stats"><div><strong>03</strong><span data-i18n="onlineNow">EN LÍNEA</span></div><div><strong>02</strong><span data-i18n="voiceRooms">SALAS DE VOZ</span></div><div><strong>24/7</strong><span data-i18n="yourCommunity">TU COMUNIDAD</span></div></div>
+      </section>
+      <section class="chat-area">
+        <div class="chat-title"><div><div class="section-label" data-i18n="communityChat">CHAT DE LA COMUNIDAD</div><h2># <span data-i18n="general">general</span></h2></div><span class="demo-badge" data-i18n="demoMode">MODO DEMO</span></div>
+        <div id="messages" class="messages">
+          <div class="message"><div class="avatar purple">N</div><div><div class="message-meta"><strong>Nox</strong><time>12:02</time></div><p data-i18n="msg1">¿Quién se apunta a unas partidas esta noche?</p></div></div>
+          <div class="message"><div class="avatar orange">R</div><div><div class="message-meta"><strong>Raven</strong><time>12:04</time></div><p data-i18n="msg2">Yo estoy dentro. Nos vemos en la sala de voz.</p></div></div>
+          <div class="message"><div class="avatar blue">G</div><div><div class="message-meta"><strong>Ghost</strong><time>12:06</time></div><p data-i18n="msg3">Perfecto, llevo el equipo listo.</p></div></div>
+        </div>
+        <form id="chat-form" class="composer">
+          <button type="button" class="attach" aria-label="Attach">＋</button>
+          <input id="message-input" autocomplete="off" data-i18n-placeholder="messagePlaceholder" placeholder="Escribe un mensaje en #general…" maxlength="400">
+          <button type="submit" class="send-btn" data-i18n="send">Enviar</button>
+        </form>
+        <p class="demo-note" data-i18n="demoNote">Esta es una maqueta visual: los mensajes solo se muestran en este navegador. El chat real y la voz se conectarán en la siguiente fase.</p>
+      </section>
+    </main>
+    <aside class="members-panel">
+      <div class="members-head" data-i18n="members">MIEMBROS — 3</div>
+      <div class="member-group" data-i18n="onlineGroup">EN LÍNEA — 3</div>
+      <div class="member"><div class="avatar purple">N<span class="presence"></span></div><div><strong>Nox</strong><small data-i18n="playing">Jugando ahora</small></div></div>
+      <div class="member"><div class="avatar orange">R<span class="presence"></span></div><div><strong>Raven</strong><small data-i18n="inVoice">En Sala principal</small></div></div>
+      <div class="member"><div class="avatar blue">G<span class="presence"></span></div><div><strong>Ghost</strong><small data-i18n="playing">Jugando ahora</small></div></div>
+      <div class="voice-card"><div class="voice-card-icon">♫</div><strong data-i18n="voiceRoomTitle">Sala principal</strong><p data-i18n="voiceRoomText">Reúnete con tu squad y mantén la comunicación.</p><button id="voice-button" data-i18n="joinVoice">Entrar a voz</button><small data-i18n="voiceNotReady">Función visual · audio pendiente</small></div>
+    </aside>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

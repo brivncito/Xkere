@@ -85,3 +85,112 @@ voiceButton.addEventListener("click", () => {
   voiceButton.textContent = joined ? (currentLang === "es" ? "Salir de vista previa" : "Leave preview") : translations[currentLang].joinVoice;
   card.querySelector("small").textContent = joined ? translations[currentLang].voiceJoinedNote : translations[currentLang].voiceNotReady;
 });
+
+/* XKERE — Autenticación con Supabase */
+
+const authScreen = document.getElementById("auth-screen");
+const signupForm = document.getElementById("signup-form");
+const loginForm = document.getElementById("login-form");
+const showLogin = document.getElementById("show-login");
+const showSignup = document.getElementById("show-signup");
+const authStatus = document.getElementById("auth-status");
+
+function showAuthMessage(message, isError = false) {
+  authStatus.textContent = message;
+  authStatus.style.color = isError ? "#ff8585" : "#c8b6ff";
+}
+
+showLogin.addEventListener("click", () => {
+  signupForm.hidden = true;
+  loginForm.hidden = false;
+  showLogin.classList.add("active");
+  showSignup.classList.remove("active");
+  showAuthMessage("");
+});
+
+showSignup.addEventListener("click", () => {
+  loginForm.hidden = true;
+  signupForm.hidden = false;
+  showSignup.classList.add("active");
+  showLogin.classList.remove("active");
+  showAuthMessage("");
+});
+
+signupForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const username = document.getElementById("signup-username").value.trim();
+  const email = document.getElementById("signup-email").value.trim();
+  const password = document.getElementById("signup-password").value;
+
+  if (!supabaseClient || !SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+    showAuthMessage("Falta configurar la conexión con Supabase.", true);
+    return;
+  }
+
+  showAuthMessage("Creando tu cuenta...");
+
+  try {
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { username },
+        emailRedirectTo: window.location.origin + window.location.pathname
+      }
+    });
+
+    if (error) throw error;
+
+    if (data.session) {
+      showAuthMessage("¡Cuenta creada! Ya puedes entrar a Xkere.");
+    } else {
+      showAuthMessage("¡Casi listo! Revisa tu correo y confirma tu cuenta.");
+    }
+  } catch (error) {
+    showAuthMessage(error.message || "No se pudo crear la cuenta.", true);
+  }
+});
+
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("login-email").value.trim();
+  const password = document.getElementById("login-password").value;
+
+  showAuthMessage("Iniciando sesión...");
+
+  try {
+    const { error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+
+    showAuthMessage("¡Sesión iniciada correctamente!");
+  } catch (error) {
+    showAuthMessage(error.message || "No se pudo iniciar sesión.", true);
+  }
+});
+
+async function updateAuthScreen() {
+  const { data, error } = await supabaseClient.auth.getSession();
+
+  if (error) {
+    showAuthMessage("No se pudo comprobar la sesión.", true);
+    return;
+  }
+
+  if (data.session) {
+    authScreen.hidden = true;
+  } else {
+    authScreen.hidden = false;
+  }
+}
+
+supabaseClient.auth.onAuthStateChange(() => {
+  updateAuthScreen();
+});
+
+updateAuthScreen();

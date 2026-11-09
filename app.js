@@ -1,5 +1,5 @@
 
-const SUPABASE_URL = "https://brivncito.github.io/Xkere/.supabase.co";
+const SUPABASE_URL = "https://mrraurmwnvmunwljosxe.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_1iP-6NEYz_U7YIBkzucwOg_wNIC538u";
 
 const supabaseClient = window.supabase.createClient(

@@ -1,5 +1,5 @@
--- Corrected Xkere base schema.
--- This migration is a draft; the follow-up RLS migration defines access policies.
+-- Xkere initial relational model (Supabase/PostgreSQL)
+-- Apply with the matching RLS and auth-profile migrations.
 create extension if not exists pgcrypto;
 
 create table if not exists public.profiles (

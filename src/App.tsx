@@ -54,7 +54,7 @@ function App() {
         <div className="room-group">◖ SALAS DE VOZ</div>
         {rooms.filter(item => item.type === "voice").map(item => (
           <button key={item.name} onClick={() => setRoom(item.name)} className={`room ${room === item.name ? "room-active" : ""}`}>
-            <span>♫</span><span>{item.name}</span>{item.people > 0 && <small>{item.people}</small>}
+            <span>♫</span><span>{item.name}</span>{(item.people ?? 0) > 0 && <small>{item.people}</small>}
           </button>
         ))}
         <div className="room-group text-group"># CANALES DE TEXTO</div>

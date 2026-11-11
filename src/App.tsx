@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 
 const initialMessages = [
   { name: "Nox", color: "violet", time: "12:02", text: "¿Quién se apunta a unas partidas esta noche?" },
@@ -22,7 +22,7 @@ function App() {
   const [joined, setJoined] = useState(false);
   const [activeCommunity, setActiveCommunity] = useState("Night Owls");
 
-  function sendMessage(event: React.FormEvent<HTMLFormElement>) {
+  function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const text = draft.trim();
     if (!text) return;

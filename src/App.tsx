@@ -91,9 +91,14 @@ function App() {
         return;
       }
 
-      const rows = (memberships ?? [])
-        .map((membership) => membership.communities)
-        .filter((community): community is Community => Boolean(community));
+      const membershipRows = (memberships ?? []) as unknown as Array<{
+        communities: Community | Community[] | null;
+      }>;
+      const rows = membershipRows.flatMap((membership) => {
+        const related = membership.communities;
+        if (!related) return [];
+        return Array.isArray(related) ? related : [related];
+      });
       setCommunities(rows);
       setActiveCommunityId((current) => rows.some((community) => community.id === current) ? current : rows[0]?.id ?? "");
     };
@@ -159,7 +164,13 @@ function App() {
         setNotice(error.message);
         return;
       }
-      setMessages((data ?? []) as Message[]);
+      const messageRows = (data ?? []) as unknown as Array<Omit<Message, "profiles"> & {
+        profiles: Message["profiles"] | NonNullable<Message["profiles"]>[];
+      }>;
+      setMessages(messageRows.map((message) => ({
+        ...message,
+        profiles: Array.isArray(message.profiles) ? message.profiles[0] ?? null : message.profiles,
+      })));
     };
 
     void loadMessages();
@@ -269,7 +280,8 @@ function App() {
         .select("id,name");
       if (rolesError) throw rolesError;
 
-      const ownerRole = roles?.find((role) => role.name === "Owner");
+      const roleRows = (roles ?? []) as unknown as Array<{ id: string; name: string }>;
+      const ownerRole = roleRows.find((role) => role.name === "Owner");
       if (ownerRole) {
         const { error: assignError } = await supabase.from("member_roles").insert({
           community_id: community.id,
@@ -285,8 +297,9 @@ function App() {
       ]);
       if (channelsError) throw channelsError;
 
-      setCommunities((current) => [...current, community as Community]);
-      setActiveCommunityId(community.id);
+      const createdCommunity = community as unknown as Community;
+      setCommunities((current) => [...current, createdCommunity]);
+      setActiveCommunityId(createdCommunity.id);
       setCommunityName("");
       setShowCreateCommunity(false);
       setNotice("Comunidad creada correctamente.");

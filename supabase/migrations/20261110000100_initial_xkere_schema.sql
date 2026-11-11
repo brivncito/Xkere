@@ -1,5 +1,5 @@
 -- Xkere initial relational model (Supabase/PostgreSQL)
--- Draft migration: review policies before applying to a live Supabase project.
+-- Draft migration: apply only after reviewing the follow-up RLS migration.
 create extension if not exists pgcrypto;
 
 create table if not exists public.profiles (
@@ -49,8 +49,12 @@ create table if not exists public.member_roles (
   role_id uuid not null references public.community_roles(id) on delete cascade,
   assigned_at timestamptz not null default now(),
   primary key (community_id, user_id, role_id),
-  foreign key (community_id, user_id) references public.community_members(community_id, user_id) on delete cascade
+  foreign key (community_id, user_id) references public.community_members(community_id, user_id) on delete cascade,
+  foreign key (role_id, community_id) references public.community_roles(id, community_id) on delete cascade
 );
+
+alter table public.community_roles
+  add constraint community_roles_id_community_unique unique (id, community_id);
 
 create table if not exists public.channels (
   id uuid primary key default gen_random_uuid(),
@@ -62,7 +66,8 @@ create table if not exists public.channels (
   position integer not null default 0,
   is_private boolean not null default false,
   created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  unique (id, community_id)
 );
 
 create table if not exists public.channel_members (
@@ -105,8 +110,7 @@ create table if not exists public.voice_sessions (
   unique (channel_id, user_id)
 );
 
--- Enable RLS now; restrictive policies are intentionally added in the next migration
--- after the membership/role authorization helpers have been audited.
+-- RLS is enabled before the app connects; policy migration supplies scoped access.
 alter table public.profiles enable row level security;
 alter table public.communities enable row level security;
 alter table public.community_members enable row level security;

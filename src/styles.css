@@ -17,3 +17,22 @@
 .auth-footnote,.empty-sidebar,.empty-state{font-size:11px;line-height:1.6;color:#8e849b}
 .inline-create{display:flex;gap:6px;padding:6px 0}.inline-create button{margin:0}
 .empty-state{align-self:center;margin:auto;text-align:center;max-width:440px}
+
+/* Supabase-backed Xkere account and community interface */
+.auth-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 50% 0%,#2b1d3d 0%,#100e16 55%)}
+.auth-card{width:min(100%,420px);padding:30px;background:#15121c;border:1px solid #393047;border-radius:16px;box-shadow:0 24px 80px #0008;display:flex;flex-direction:column;gap:10px}
+.auth-logo{font:700 30px 'Space Grotesk';letter-spacing:.08em;text-align:center}.auth-logo span{color:#b48cf1}
+.auth-subtitle{text-align:center;color:#9589a4;font-size:10px;letter-spacing:.16em;margin:0 0 12px}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:5px 0 12px}
+.auth-tab{background:#211c2a;color:#a99eb6;border:1px solid #393047;border-radius:8px;padding:10px}
+.auth-tab.active{background:#3a2a50;color:#f2eaff;border-color:#8861b6}
+.auth-card label{font-size:11px;color:#bdb3c9;margin-top:4px}
+.auth-card input,.inline-create input{width:100%;min-width:0;background:#211c2a;border:1px solid #393047;border-radius:8px;padding:11px;color:#f4f0fb;outline:none}
+.auth-card input:focus,.inline-create input:focus{border-color:#a77ad8}
+.auth-submit,.inline-create button{border:0;border-radius:8px;background:#865bc0;color:white;padding:11px;font-weight:600;margin-top:8px}
+.auth-submit:disabled,.inline-create button:disabled{opacity:.6;cursor:wait}
+.auth-status{font-size:11px;line-height:1.5;color:#e3c9ff;overflow-wrap:anywhere}
+.auth-footnote,.empty-sidebar,.empty-state{font-size:11px;line-height:1.6;color:#8e849b}
+.inline-create{display:flex;gap:6px;padding:6px 0}.inline-create button{margin:0}
+.empty-state{align-self:center;margin:auto;text-align:center;max-width:440px}
+.send:disabled{opacity:.55;cursor:not-allowed}
